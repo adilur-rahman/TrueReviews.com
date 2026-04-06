@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="stylesheet" href="truereviews.CSS">
+<title>TrueReviews.com — Check the Reviews, before you buy.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="logo" onclick="showPage('home')" style="cursor:pointer">
+    <span>★</span> True<span>Reviews</span>.com
+  </div>
+  <div class="nav-links">
+    <button class="nav-link" onclick="showPage('share')">Share Review</button>
+    <button class="nav-link" onclick="showPage('summary')">Summary</button>
+    <button class="nav-link" onclick="showPage('account')">My Account</button>
+    <button class="nav-link primary" onclick="showPage('signin')">Sign In</button>
+  </div>
+</nav>
+
+<!-- ═══ HOME PAGE ═══ -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-stars">
+      <div class="hero-star"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+      <div class="hero-star"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+      <div class="hero-star"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+      <div class="hero-star"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+      <div class="hero-star" style="background:#e5e2db"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#b4b0a8"/></svg></div>
+    </div>
+    <h1>Check the reviews,<br/><em>before you buy.</em></h1>
+    <p>Real reviews from real buyers across Bangladesh's online shops. No paid promotions, no fake ratings.</p>
+    <div class="hero-search">
+      <input type="text" placeholder="Search a shop name, e.g. Shajgoj..." id="heroSearch"/>
+      <button onclick="handleHeroSearch()">Search</button>
+    </div>
+    <div class="hero-pills">
+      <span class="hero-pill" onclick="filterByCategory('clothing')">👗 Clothing</span>
+      <span class="hero-pill" onclick="filterByCategory('gadgets')">📱 Gadgets</span>
+      <span class="hero-pill" onclick="filterByCategory('food')">🍔 Food</span>
+      <span class="hero-pill" onclick="filterByCategory('accessories')">💍 Accessories</span>
+      <span class="hero-pill" onclick="filterByCategory('beauty')">💄 Beauty</span>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><strong>12,480+</strong><span>Reviews shared</span></div>
+      <div class="hero-stat"><strong>2,300+</strong><span>Shops reviewed</span></div>
+      <div class="hero-stat"><strong>8,900+</strong><span>Verified buyers</span></div>
+    </div>
+  </div>
+
+  <!-- FILTERS -->
+  <div class="feed-controls">
+    <div class="filter-group">
+      <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
+      <button class="filter-btn pos" onclick="setFilter('positive',this)">👍 Positive</button>
+      <button class="filter-btn neg" onclick="setFilter('negative',this)">👎 Negative</button>
+      <button class="filter-btn mixed" onclick="setFilter('mixed',this)">😐 Mixed</button>
+    </div>
+    <select class="sort-select" onchange="sortReviews(this.value)">
+      <option value="newest">Newest first</option>
+      <option value="upvoted">Most upvoted</option>
+      <option value="discussed">Most discussed</option>
+    </select>
+  </div>
+
+  <!-- REVIEW FEED -->
+  <div class="feed" id="reviewFeed"></div>
+  <div class="load-more" id="loadMoreSection" style="display:none">
+    <button class="load-more-btn" onclick="loadMore()">↓ Scroll to see more reviews</button>
+  </div>
+</div>
+
+<!-- ═══ STORY PAGE ═══ -->
+<div class="page" id="page-story">
+  <div class="story-page" id="storyContent"></div>
+</div>
+
+<!-- ═══ SHARE REVIEW PAGE ═══ -->
+<div class="page" id="page-share">
+  <div class="share-page">
+    <button class="back-btn" onclick="showPage('home')">← Back</button>
+    <h2>Share your experience</h2>
+    <p class="subtitle">Help others by sharing your real review. Only honest reviews, please.</p>
+
+    <div class="form-group">
+      <label>How was your experience?</label>
+      <div class="vibe-selector">
+        <div class="vibe-option pos" onclick="selectVibe('positive',this)">
+          <div class="vibe-icon">😊</div>
+          <div class="vibe-label">Positive</div>
+        </div>
+        <div class="vibe-option neg" onclick="selectVibe('negative',this)">
+          <div class="vibe-icon">😞</div>
+          <div class="vibe-label">Negative</div>
+        </div>
+        <div class="vibe-option mixed" onclick="selectVibe('mixed',this)">
+          <div class="vibe-icon">😐</div>
+          <div class="vibe-label">Mixed</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Shop / Business Name *</label>
+      <input class="form-control" type="text" placeholder="e.g. Shajgoj, Chaldal, Daraz..."/>
+    </div>
+    <div class="form-group">
+      <label>Facebook Page Link *</label>
+      <input class="form-control" type="url" placeholder="https://facebook.com/shopname"/>
+    </div>
+    <div class="form-group">
+      <label>Website Link <span style="color:var(--text3)">(optional)</span></label>
+      <input class="form-control" type="url" placeholder="https://shopname.com"/>
+    </div>
+    <div class="form-group">
+      <label>Review Title *</label>
+      <input class="form-control" type="text" placeholder="Summarize your experience in one line..."/>
+    </div>
+    <div class="form-group">
+      <label>Your Full Review *</label>
+      <textarea class="form-control" rows="6" placeholder="Share the details of your experience. What did you order? What went wrong or right? Be honest and specific..."></textarea>
+    </div>
+    <div class="form-group">
+      <label>Proof Images *</label>
+      <div class="upload-area" onclick="showToast('Image upload will work after backend setup!')">
+        <div style="font-size:2rem">📷</div>
+        <p>Click to upload screenshots, receipts, or photos</p>
+        <p style="font-size:0.78rem;margin-top:4px">JPG, PNG up to 5MB each</p>
+      </div>
+    </div>
+
+    <button class="submit-btn" onclick="submitReview()">Share Review →</button>
+  </div>
+</div>
+
+<!-- ═══ SUMMARY PAGE ═══ -->
+<div class="page" id="page-summary">
+  <div class="summary-page">
+    <button class="back-btn" onclick="showPage('home')">← Back</button>
+    <h2>Shop Summary</h2>
+    <p class="subtitle">Overview of review statistics for all shops on TrueReviews.</p>
+    <div class="company-grid" id="companyGrid"></div>
+  </div>
+</div>
+
+<!-- ═══ SIGNIN PAGE ═══ -->
+<div class="page" id="page-signin">
+  <div class="auth-page">
+    <div class="auth-card">
+      <h2>Welcome back</h2>
+      <p class="subtitle">Sign in to share reviews and vote</p>
+      <div class="form-group"><label>Full Name</label><input class="form-control" type="text" placeholder="Your name"/></div>
+      <div class="form-group"><label>Email Address</label><input class="form-control" type="email" placeholder="you@email.com"/></div>
+      <div class="form-group"><label>Phone Number</label><input class="form-control" type="tel" placeholder="+880 ..."/></div>
+      <div class="form-group"><label>Password</label><input class="form-control" type="password" placeholder="••••••••"/></div>
+      <button class="auth-btn" onclick="showToast('Auth will work after backend integration!')">Sign In</button>
+      <div class="auth-switch">Don't have an account? <a onclick="showToast('Registration coming soon!')">Register here</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ACCOUNT PAGE ═══ -->
+<div class="page" id="page-account">
+  <div class="account-page">
+    <button class="back-btn" onclick="showPage('home')">← Back</button>
+    <div class="account-hero">
+      <div class="account-avatar">RH</div>
+      <div>
+        <div class="account-name">Rahim Hossain</div>
+        <div class="account-meta">rahim@example.com · 01712-345678</div>
+        <div style="margin-top:8px"><span class="vibe-badge positive">Verified Reviewer</span></div>
+      </div>
+    </div>
+    <div class="my-reviews-title">My Reviews (3)</div>
+    <div id="myReviews"></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">True<span>Reviews</span>.com</div>
+  <div class="footer-links">
+    <a href="#">Who We Are</a>
+    <a href="#">Terms & Conditions</a>
+    <a href="#">Privacy Policy</a>
+    <a href="#">Disclaimer</a>
+  </div>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img src="" id="lightboxImg" alt="proof"/>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script src="truereviews.js"></script>
+
+</body>
+</html>
